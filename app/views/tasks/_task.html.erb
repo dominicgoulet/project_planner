@@ -1,0 +1,39 @@
+<%
+  start_date = $start_date
+  end_date = $end_date
+
+  duration = (end_date - start_date).to_i
+  cells_before = [(task.planned_start_date - start_date).to_i, 0].max
+  cells_for_event = [(task.planned_end_date - [start_date, task.planned_start_date].max).to_i, 5].max
+  cells_after = duration + 1 - cells_before - cells_for_event
+%>
+
+<% if cells_before < duration %>
+<tr id="<%= dom_id(task) %>">
+  <% cells_before.to_i.times do |i| %>
+  <td class="bg-white">
+  </td>
+  <% end %>
+
+  <td colspan="<%= cells_for_event.to_i %>" class="bg-white p-1">
+    <%= link_to edit_task_path(task), data: { turbo_frame: 'modal' }, class: class_names('opacity-50': task.completed?) do %>
+        <span class="<% if task.started? %>border-2 <% end %>w-full grid items-center rounded-md bg-<%= task.supplier.color || 'slate' %>-100 px-2 py-1 font-medium text-<%= task.supplier.color || 'slate' %>-700 border-<%= task.supplier.color || 'slate' %>-700">
+        <div class="font-bold truncate"><%= task.supplier.name%></div>
+        <div class="truncate"><%= task.name %></div>
+      </span>
+    <% end %>
+  </td>
+
+  <% cells_after.times do |i| %>
+  <td class="bg-white">
+    <% if i == 0 %>
+      <%= link_to new_task_path(blocked_by: task), data: { turbo_frame: 'modal' }, class: 'opacity-10 hover:opacity-100 block flex items-center justify-center' do %>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+        </svg>
+      <% end %>
+    <% end %>
+  </td>
+  <% end %>
+</tr>
+<% end %>

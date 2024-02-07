@@ -1,0 +1,30 @@
+# == Schema Information
+#
+# Table name: expenses
+#
+#  id                :bigint           not null, primary key
+#  date              :date
+#  step_id           :bigint           not null
+#  supplier_id       :bigint           not null
+#  description       :string
+#  payment_method_id :bigint           not null
+#  amount            :decimal(, )
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#
+
+one:
+  date: 2024-02-04
+  step: one
+  supplier: one
+  description: MyString
+  payment_method: one
+  amount: 9.99
+
+two:
+  date: 2024-02-04
+  step: two
+  supplier: two
+  description: MyString
+  payment_method: two
+  amount: 9.99

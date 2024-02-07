@@ -1,0 +1,34 @@
+# == Schema Information
+#
+# Table name: tasks
+#
+#  id                 :bigint           not null, primary key
+#  supplier_id        :bigint           not null
+#  name               :string
+#  budget             :decimal(, )
+#  cost               :decimal(, )
+#  estimated_time     :integer
+#  time_elapsed       :integer
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  start_date         :date
+#  completed_on       :date
+#  planned_start_date :date
+#  planned_end_date   :date
+#  duration_in_days   :integer
+#  started_on         :date
+#
+
+one:
+  name: MyString
+  budget: 9.99
+  cost: 9.99
+  estimated_time: 1
+  time_elapsed_integer: MyString
+
+two:
+  name: MyString
+  budget: 9.99
+  cost: 9.99
+  estimated_time: 1
+  time_elapsed_integer: MyString

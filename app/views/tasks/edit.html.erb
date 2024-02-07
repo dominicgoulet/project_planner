@@ -1,0 +1,3 @@
+<%= render TurboModalComponent.new(title: "Edit task") do %>
+  <%= render partial: 'form', locals: { task: @task } %>
+<% end %>

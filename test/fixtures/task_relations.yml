@@ -1,0 +1,18 @@
+# == Schema Information
+#
+# Table name: task_relations
+#
+#  id            :bigint           not null, primary key
+#  task_id       :bigint           not null
+#  blocked_by_id :bigint           not null
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#
+
+one:
+  task: one
+  blocked_by: one
+
+two:
+  task: two
+  blocked_by: two

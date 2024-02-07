@@ -1,0 +1,142 @@
+<%= form_with(model: task, local: true) do |form| %>
+  <div class="shadow border overflow-hidden">
+    <div class="grid gap-8 sm:grid-cols-2">
+      <div class="grid content-start gap-8 p-6">
+        <div>
+          <%= form.label :name, class: 'block text-sm font-medium leading-6 text-gray-900', autofocus: true %>
+
+          <div class="mt-2">
+            <%= form.text_field :name, class: 'block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6' %>
+          </div>
+        </div>
+
+        <div>
+          <%= form.label :supplier_id, class: 'block text-sm font-medium leading-6 text-gray-900' %>
+
+          <div class="mt-2">
+            <%= form.select :supplier_id, suppliers_select_options, {}, class: 'block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6' %>
+          </div>
+        </div>
+
+        <div class="grid gap-8 grid-cols-2">
+          <div>
+            <%= form.label :start_date, class: 'block text-sm font-medium leading-6 text-gray-900' %>
+
+            <div class="mt-2">
+              <%= form.date_field :start_date, class: 'block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6' %>
+            </div>
+          </div>
+
+          <div>
+            <%= form.label :estimated_time, class: 'block text-sm font-medium leading-6 text-gray-900' %>
+
+            <div class="relative mt-2 rounded-md shadow-sm">
+              <%= form.text_field :estimated_time, class: 'block w-full rounded-md border-0 py-1.5 pr-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6' %>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                <span class="text-gray-500 sm:text-sm" id="price-currency">HOURS</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <%= form.label :started_on, class: 'block text-sm font-medium leading-6 text-gray-900' %>
+
+            <div class="mt-2">
+              <%= form.date_field :started_on, class: 'block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6' %>
+            </div>
+          </div>
+
+          <div>
+            <%= form.label :completed_on, class: 'block text-sm font-medium leading-6 text-gray-900' %>
+
+            <div class="mt-2">
+              <%= form.date_field :completed_on, class: 'block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6' %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid content-start p-6">
+        <div>
+          <div class="grid gap-2 grid-cols-10">
+            <div class="col-span-9">
+              <span class="block text-sm font-medium leading-6 text-gray-900">
+                Blocked by
+              </span>
+            </div>
+          </div>
+
+          <div data-controller="nested-form">
+            <template data-nested-form-target="template">
+              <%= form.fields_for :task_relations, TaskRelation.new, child_index: 'NEW_RECORD' do |task_relation| %>
+                <%= render "task_relation_fields", form: task_relation %>
+              <% end %>
+            </template>
+
+            <%= form.fields_for :task_relations do |task_relation| %>
+              <%= render "task_relation_fields", form: task_relation %>
+            <% end %>
+
+            <div class="mt-4" data-nested-form-target="links">
+              <%= link_to "+ Add Blocker", "#", class: "rounded bg-white px-2 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50", data: { action: "click->nested-form#add_association" } %>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="grid gap-2 grid-cols-10 mt-6">
+            <div class="col-span-5">
+              <span class="block text-sm font-medium leading-6 text-gray-900">
+                Material
+              </span>
+            </div>
+
+            <div class="col-span-2">
+              <span class="block text-sm font-medium leading-6 text-gray-900">
+                Quantity
+              </span>
+            </div>
+
+            <div class="col-span-2">
+              <span class="block text-sm font-medium leading-6 text-gray-900">
+                Unit price
+              </span>
+            </div>
+          </div>
+
+          <div data-controller="nested-form">
+            <template data-nested-form-target="template">
+              <%= form.fields_for :task_materials, TaskMaterial.new, child_index: 'NEW_RECORD' do |task_material| %>
+                <%= render "task_material_fields", form: task_material %>
+              <% end %>
+            </template>
+
+            <%= form.fields_for :task_materials do |task_material| %>
+              <%= render "task_material_fields", form: task_material %>
+            <% end %>
+
+            <div class="mt-4" data-nested-form-target="links">
+              <%= link_to "+ Add Material", "#", class: "rounded bg-white px-2 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50", data: { action: "click->nested-form#add_association" } %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="bg-gray-100 flex gap-4 justify-between p-6 ">
+      <div class="flex gap-4 items-center">
+      <% if task.persisted? %>
+        <%= link_to "Delete Task", task_path(task), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this supplier?", action: 'turbo-modal#hideModal' }, class: 'rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600' %>
+      <% end %>
+      </div>
+
+      <div class="flex gap-4 justify-end">
+        <a data-action="turbo-modal#hideModal" class="cursor-pointer rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Cancel</a>
+        <%= form.submit class: 'rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600' %>
+      </div>
+    </div>
+
+    <%= render partial: 'partials/model_errors', locals: { model: task } %>
+  </div>
+<% end %>
