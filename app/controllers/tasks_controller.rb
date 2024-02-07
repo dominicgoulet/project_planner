@@ -1,9 +1,12 @@
 class TasksController < ApplicationController
   before_action :ensure_frame_response, only: [:new, :edit]
-  before_action :set_task, only: [:edit, :update, :destroy]
+  before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
     @tasks = Task.all
+  end
+
+  def show
   end
 
   def new

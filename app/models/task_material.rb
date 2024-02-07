@@ -18,10 +18,13 @@ class TaskMaterial < ApplicationRecord
 
   before_save :calculate_total_amount
 
+  def subtotal
+    quantity * unit_price
+  end
+
   private
 
   def calculate_total_amount
-    subtotal = quantity * unit_price
     self.taxes_amount = (subtotal * 0.14975).round(2)
     self.total_amount = (subtotal + taxes_amount).round(2)
   end

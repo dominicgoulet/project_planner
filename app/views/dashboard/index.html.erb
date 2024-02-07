@@ -74,8 +74,8 @@
 
 <%= turbo_stream_from [:tasks] %>
 
-<div class="overflow-scroll">
-<table class="text-xs table-auto border-separate border-spacing-px bg-gray-200 mt-6" id="tasks">
+<div class="overflow-scroll mt-6">
+<table class="text-xs table-auto border-separate border-spacing-px bg-gray-200" id="tasks">
   <% if @start_date.month != @end_date.month %>
   <tr>
     <% last = 0 %>
@@ -88,9 +88,17 @@
   </tr>
   <% end %>
 
-  <tr class="bg-gray-50">
+  <tr>
   <% (@start_date..@end_date).each do |date| %>
-    <td style="width: 50px;" class="whitespace-nowrap text-xs">
+    <td style="width: 50px;" class="whitespace-nowrap text-xs <% if date.on_weekend? %>bg-gray-200<% else %>bg-gray-50<% end %>">
+      <div class="flex items-center justify-center py-3 font-semibold"><%= Date::DAYNAMES[date.wday].first %></div>
+    </td>
+  <% end %>
+  </tr>
+
+  <tr>
+  <% (@start_date..@end_date).each do |date| %>
+    <td style="width: 50px;" class="whitespace-nowrap text-xs <% if date.on_weekend? %>bg-gray-200<% else %>bg-gray-50<% end %>">
       <div class="flex items-center justify-center py-3 font-semibold"><%= date.day %></div>
     </td>
   <% end %>
@@ -101,7 +109,7 @@
 <% end %>
   <tr>
     <% (@start_date..@end_date).each do |date| %>
-    <td class="bg-white py-3">
+    <td class="py-3 <% if date.on_weekend? %>bg-gray-200<% else %>bg-white<% end %>">
       <%= link_to new_task_path(date: date), data: { turbo_frame: 'modal' }, class: 'opacity-10 hover:opacity-100 block flex items-center justify-center' do %>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
           <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />

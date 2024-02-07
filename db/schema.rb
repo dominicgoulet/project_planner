@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_06_130222) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_07_225455) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -101,6 +101,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_06_130222) do
     t.date "planned_end_date"
     t.integer "duration_in_days"
     t.date "started_on"
+    t.bigint "root_task_id"
+    t.integer "depth"
+    t.bigint "blocking_parent_id"
+    t.string "sort_string"
+    t.index ["blocking_parent_id"], name: "index_tasks_on_blocking_parent_id"
+    t.index ["root_task_id"], name: "index_tasks_on_root_task_id"
     t.index ["supplier_id"], name: "index_tasks_on_supplier_id"
   end
 
@@ -113,4 +119,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_06_130222) do
   add_foreign_key "task_relations", "tasks"
   add_foreign_key "task_relations", "tasks", column: "blocked_by_id"
   add_foreign_key "tasks", "suppliers"
+  add_foreign_key "tasks", "tasks", column: "blocking_parent_id"
+  add_foreign_key "tasks", "tasks", column: "root_task_id"
 end
