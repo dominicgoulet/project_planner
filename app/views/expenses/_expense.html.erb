@@ -3,7 +3,6 @@
   <td class="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500"><%= expense.step.name %></td>
   <td class="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500"><%= expense.supplier.name %></td>
   <td class="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500"><%= expense.description %></td>
-  <td class="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500"><%= expense.payment_method.name %></td>
   <td class="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500"><%= format_amount(expense.amount) %></td>
   <td class="relative whitespace-nowrap px-3 py-2.5 text-right text-sm font-medium flex gap-4 justify-end">
     <%= link_to "Edit", edit_expense_path(expense), data: { turbo_frame: 'modal' }, class: 'text-indigo-600 hover:text-indigo-900' %>

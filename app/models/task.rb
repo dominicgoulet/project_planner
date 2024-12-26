@@ -35,6 +35,8 @@ class Task < ApplicationRecord
       where('(planned_start_date >= ? AND planned_start_date <= ?) OR (planned_start_date <= ? AND planned_end_date >= ?)', start_date, end_date, start_date, start_date)
   }
 
+  scope :root, -> { where(root_task_id: nil) }
+
   broadcasts_to ->(task) { [:tasks] }, inserts_by: :append, targets: 'tasks', partial: 'tasks/task'
 
   def update_calculations!

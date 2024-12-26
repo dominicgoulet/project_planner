@@ -12,7 +12,7 @@
           </thead>
           <tbody class="divide-y divide-gray-200 bg-white">
             <% Supplier.all.each do |supplier| %>
-            <tr>
+            <tr<% if supplier.cost == supplier.budget %> class="bg-gray-100 opacity-30"<% end %>>
               <td class="whitespace-nowrap py-2.5 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 flex items-center gap-x-2">
                 <% if supplier.cost > supplier.budget %>
                   <div class="flex-none rounded-full p-1 text-rose-400 bg-rose-400/10">

@@ -12,6 +12,9 @@
 <tr id="<%= dom_id(task) %>">
   <% cells_before.to_i.times do |i| %>
   <td class="<% if ($start_date + i.days).on_weekend? %>bg-gray-200<% else %>bg-white<% end %>">
+    <% if i == cells_before - 1 && task.blocking_parent.present? %>
+    <div class="text-3xl flex justify-center font-thin mt-2">↳</div>
+    <% end %>
   </td>
   <% end %>
 
